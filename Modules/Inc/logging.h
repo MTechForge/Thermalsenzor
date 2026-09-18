@@ -19,14 +19,19 @@
  * @brief Initialization of logging module
  * @param logUart
  */
-void log_init(UART_HandleTypeDef* logUart);
+void log_init(UART_HandleTypeDef *logUart);
 
 
 /**
- * @brief variadic parameter logging function
+ * @brief variadic parameter logging function without adding of NL
+ */
+void log_writeRaw(const char *format, ...);
+
+
+/**
+ * @brief  the NL is appended if not present in buffer
  * !!! do not exceed MAX_LOG_DATA buffer !!!
  */
 void log_write(const char *format, ...);
-
 
 #endif /* INC_LOGGING_H_ */

@@ -94,9 +94,8 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  application_init();
   log_init(&huart2);
-  i2c_scan(&hi2c1);	//temporary
+  application_init(&hi2c1);
 
   /* USER CODE END 2 */
 

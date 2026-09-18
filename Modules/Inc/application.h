@@ -14,12 +14,11 @@ extern "C" {
 
 #include "main.h"
 
-
 /**
  * @brief One-time application startup: initializes and wires together all modules.
  * Must be called once, after HAL/peripheral init, before application_loop().
  */
-void application_init();
+void application_init(I2C_HandleTypeDef *hi2c);
 
 /**
  * @brief Application main-loop tick: drives the scheduler and the communication protocol.
@@ -28,16 +27,8 @@ void application_init();
 void application_loop();
 
 
-/**
- * @brief helper - I2C scanner and report the result on UART
- */
-void i2c_scan(I2C_HandleTypeDef *hi2c);
-
-
-
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif /* INC_APPLICATION_H_ */
