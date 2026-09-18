@@ -70,9 +70,9 @@ static float thermal_adi_DecodePixel(uint8_t low, uint8_t high)
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return 1 when initialization succeeds, otherwise 0.
  */
-int8_t hermal_adi_Is(I2C_HandleTypeDef *hi2c)
+int8_t thermal_adi_Is(I2C_HandleTypeDef *hi2c)
 {
-    return (hermal_adi_Init(hi2c) == HAL_OK) ? 1 : 0;
+    return (thermal_adi_Init(hi2c) == HAL_OK) ? 1 : 0;
 }
 
 /**
@@ -81,7 +81,7 @@ int8_t hermal_adi_Is(I2C_HandleTypeDef *hi2c)
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return HAL_OK on success or the HAL error status otherwise.
  */
-HAL_StatusTypeDef hermal_adi_Init(I2C_HandleTypeDef *hi2c)
+HAL_StatusTypeDef thermal_adi_Init(I2C_HandleTypeDef *hi2c)
 {
     HAL_StatusTypeDef status;
 
@@ -126,7 +126,7 @@ HAL_StatusTypeDef hermal_adi_Init(I2C_HandleTypeDef *hi2c)
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return HAL_OK on success or the HAL error status otherwise.
  */
-HAL_StatusTypeDef hermal_adi_On(I2C_HandleTypeDef *hi2c)
+HAL_StatusTypeDef thermal_adi_On(I2C_HandleTypeDef *hi2c)
 {
     if (hi2c == NULL)
     {
@@ -143,7 +143,7 @@ HAL_StatusTypeDef hermal_adi_On(I2C_HandleTypeDef *hi2c)
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return HAL_OK on success or the HAL error status otherwise.
  */
-HAL_StatusTypeDef hermal_adi_Off(I2C_HandleTypeDef *hi2c)
+HAL_StatusTypeDef thermal_adi_Off(I2C_HandleTypeDef *hi2c)
 {
     HAL_StatusTypeDef status;
 
@@ -167,7 +167,7 @@ HAL_StatusTypeDef hermal_adi_Off(I2C_HandleTypeDef *hi2c)
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return HAL_OK on success or the HAL error status otherwise.
  */
-HAL_StatusTypeDef hermal_adi_Read(I2C_HandleTypeDef *hi2c)
+HAL_StatusTypeDef thermal_adi_Read(I2C_HandleTypeDef *hi2c)
 {
     HAL_StatusTypeDef status;
     uint8_t raw[THERMAL_ADI_PIXEL_BYTES];

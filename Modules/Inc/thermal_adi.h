@@ -29,7 +29,7 @@ extern thermal_adi_t _thermal_adiData;
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return 1 when the sensor is detected and initialized, otherwise 0.
  */
-int8_t hermal_adi_Is(I2C_HandleTypeDef *hi2c);
+int8_t thermal_adi_Is(I2C_HandleTypeDef *hi2c);
 
 /**
  * @brief Resets and configures the AMG88xx sensor.
@@ -39,7 +39,7 @@ int8_t hermal_adi_Is(I2C_HandleTypeDef *hi2c);
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return HAL_OK on success or the HAL error status otherwise.
  */
-HAL_StatusTypeDef hermal_adi_Init(I2C_HandleTypeDef *hi2c);
+HAL_StatusTypeDef thermal_adi_Init(I2C_HandleTypeDef *hi2c);
 
 /**
  * @brief Starts AMG88xx temperature conversion.
@@ -47,7 +47,7 @@ HAL_StatusTypeDef hermal_adi_Init(I2C_HandleTypeDef *hi2c);
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return HAL_OK on success or the HAL error status otherwise.
  */
-HAL_StatusTypeDef hermal_adi_On(I2C_HandleTypeDef *hi2c);
+HAL_StatusTypeDef thermal_adi_On(I2C_HandleTypeDef *hi2c);
 
 /**
  * @brief Stops conversion and places the AMG88xx in sleep mode.
@@ -55,7 +55,7 @@ HAL_StatusTypeDef hermal_adi_On(I2C_HandleTypeDef *hi2c);
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return HAL_OK on success or the HAL error status otherwise.
  */
-HAL_StatusTypeDef hermal_adi_Off(I2C_HandleTypeDef *hi2c);
+HAL_StatusTypeDef thermal_adi_Off(I2C_HandleTypeDef *hi2c);
 
 /**
  * @brief Reads all 64 AMG88xx pixels into the global thermal data structure.
@@ -67,6 +67,6 @@ HAL_StatusTypeDef hermal_adi_Off(I2C_HandleTypeDef *hi2c);
  * @param hi2c Pointer to the STM32 HAL I2C peripheral used by the sensor.
  * @return HAL_OK on success or the HAL error status otherwise.
  */
-HAL_StatusTypeDef hermal_adi_Read(I2C_HandleTypeDef *hi2c);
+HAL_StatusTypeDef thermal_adi_Read(I2C_HandleTypeDef *hi2c);
 
 #endif /* INC_THERMAL_ADI_H_ */
