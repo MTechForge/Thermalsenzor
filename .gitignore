@@ -1,0 +1,12 @@
+/Debug
+/Release
+*.launch
+build/
+**/build/
+.DS_Store
+**/.DS_Store
+
+#
+**/.settings/
+*.user
+**/lib/

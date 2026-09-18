@@ -1,0 +1,22 @@
+Potrebujem vytvoriť čítanie I2C interface pre thermal senzor panasonic AMG88xx
+- uloha je spracovať datasheep, spracovať registre a vytvoriť volania
+- datasheet je v súbore ast-ind-177617.pdf 
+- v projekte nájdeš hlavičkový súbor, pre každú funkciu vytvor komentár v anglickom jazyku, thermal_adi.h 
+- do súboru thermal_adi.c vytvor telé všetkých funckíí, z thermal_adi.h 
+- po načítaní dát, potrebujem mať v premennej platné hodnoty - IsDataValid a grid 8x8 nameraných teplôt. Pokiaľ typ float nevyhovuje, zmeň ho na vhodnejší variant
+
+funkcie:
+int8_t hermal_adi_Is(I2C_HandleTypeDef *hi2c);  
+	- inicializocanie senzora pri štarte, senzor sa po inicializovaní prepne do sleep režimu
+
+HAL_StatusTypeDef hermal_adi_On(I2C_HandleTypeDef *hi2c);
+	- aktivovanie senzora, tak, aby meral hodnoty
+
+HAL_StatusTypeDef hermal_adi_Off(I2C_HandleTypeDef *hi2c);
+	- vypnutie senzora a prechod do sleep režimu
+
+HAL_StatusTypeDef hermal_adi_Read(I2C_HandleTypeDef *hi2c);
+	- vycítanie hodnôt zo senzora, a naplnenie štruktury thermal_adi_t _thermal_adiData;
+
+
+
