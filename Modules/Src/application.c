@@ -63,8 +63,7 @@ void application_loop()
     {
         status = thermal_amg88_Read(_hi2c);
         log_write("thermal_amg88 read:%05d %s dataReady:%d", n++, ((status == HAL_OK) ? "OK" : "FAILED"), (int)_thermal_amg88Data.IsDataValid);
-        if(status == HAL_OK)
-            thermal_logData();
+        thermal_logData();
 
 
     }
