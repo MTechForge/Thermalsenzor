@@ -27,9 +27,6 @@
 #define THERMAL_AMG88_PIXEL_COUNT     64U
 #define THERMAL_AMG88_PIXEL_BYTES     (THERMAL_AMG88_PIXEL_COUNT * 2U)
 
-#define THERMAL_AMG88_REG_STATUS 0x04U
-#define THERMAL_AMG88_STATUS_INT_FLAG 0x01U
-#define THERMAL_AMG88_STATUS_OVF      0x02U
 
 thermal_amg88_t _thermal_amg88Data = { };
 
@@ -69,23 +66,6 @@ static float thermal_amg88_DecodePixel(uint8_t low, uint8_t high)
     return (float) raw * 0.25f;
 }
 
-/**
- * @brief Reads the AMG88xx status register.
- *
- * @param hi2c Pointer to the STM32 HAL I2C peripheral.
- * @param status Pointer where the status register value is stored.
- * @return HAL_OK on success or the HAL error status otherwise.
- */
-static HAL_StatusTypeDef thermal_amg88_ReadStatus(I2C_HandleTypeDef *hi2c, uint8_t *status)
-{
-    if ((hi2c == NULL) || (status == NULL))
-    {
-        return HAL_ERROR;
-    }
-
-    return HAL_I2C_Mem_Read(hi2c, THERMAL_AMG88_I2C_ADDRESS, THERMAL_AMG88_REG_STATUS, I2C_MEMADD_SIZE_8BIT, status, 1, 1000);
-}
-
 
 int8_t thermal_amg88_Is(I2C_HandleTypeDef *hi2c)
 {
@@ -106,9 +86,10 @@ HAL_StatusTypeDef thermal_amg88_Init(I2C_HandleTypeDef *hi2c)
             break;
         if ((status = thermal_amg88_WriteRegister(hi2c, THERMAL_AMG88_REG_RESET,THERMAL_AMG88_RESET_FLAG)) != HAL_OK)
             break;
-        HAL_Delay(2);
+        HAL_Delay(10);
         if ((status = thermal_amg88_WriteRegister(hi2c, THERMAL_AMG88_REG_FRAME_RATE, THERMAL_AMG88_FRAME_RATE_10HZ)) != HAL_OK)
             break;
+        HAL_Delay(10);
         if ((status = thermal_amg88_Off(hi2c)) != HAL_OK)
             break;
         status = HAL_OK;
@@ -125,14 +106,17 @@ HAL_StatusTypeDef thermal_amg88_On(I2C_HandleTypeDef *hi2c)
     HAL_StatusTypeDef status = thermal_amg88_WriteRegister(hi2c, THERMAL_AMG88_REG_POWER, THERMAL_AMG88_POWER_NORMAL);
 
     if (status == HAL_OK)
-        HAL_Delay(250);
+        HAL_Delay(20);
     return status;
 }
 
 
 HAL_StatusTypeDef thermal_amg88_Off(I2C_HandleTypeDef *hi2c)
 {
-    return thermal_amg88_WriteRegister(hi2c, THERMAL_AMG88_REG_POWER,THERMAL_AMG88_POWER_SLEEP);
+    HAL_StatusTypeDef status = thermal_amg88_WriteRegister(hi2c, THERMAL_AMG88_REG_POWER,THERMAL_AMG88_POWER_SLEEP);
+    if (status == HAL_OK)
+        HAL_Delay(20);
+    return status;
 }
 
 
@@ -142,7 +126,6 @@ HAL_StatusTypeDef thermal_amg88_Read(I2C_HandleTypeDef *hi2c)
     uint8_t raw[THERMAL_AMG88_PIXEL_BYTES];
     uint8_t row;
     uint8_t column;
-    uint8_t regState = 0;
 
     _thermal_amg88Data.IsDataValid = 0;
     do
@@ -151,16 +134,6 @@ HAL_StatusTypeDef thermal_amg88_Read(I2C_HandleTypeDef *hi2c)
             break;
         if (!_thermal_amg88Data.IsInit)
             break;
-        /*
-        if ((status = thermal_amg88_ReadStatus(hi2c, &regState)))
-            break;
-
-        if ((regState & THERMAL_AMG88_STATUS_OVF) != 0U)
-        {
-            status = HAL_BUSY;
-            break;
-        }
-*/
         if ((status = HAL_I2C_Mem_Read(hi2c, THERMAL_AMG88_I2C_ADDRESS, THERMAL_AMG88_REG_PIXEL_BASE, I2C_MEMADD_SIZE_8BIT, raw, sizeof(raw), 1000)) != HAL_OK)
             break;
         for (row = 0; row < THERMAL_AMG88_ROWS; ++row)
